@@ -1,0 +1,17 @@
+# Note: this file is managed by puppet.
+
+[connection]
+id=CMU
+uuid=d9f15f01-09ca-4658-b08f-398a24cae03d
+type=802-11-wireless
+timestamp=5232
+
+[802-11-wireless]
+ssid=CMU
+mode=infrastructure
+
+[ipv6]
+method=auto
+
+[ipv4]
+method=auto
