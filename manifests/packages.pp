@@ -6,6 +6,7 @@ class cmuphyscomp::packages {
    "unison",
    "emacs",
    "gcc",
+   "make",
    "git",
    "git-gui",
    "screen",
@@ -21,6 +22,8 @@ class cmuphyscomp::packages {
    "pd-list-abs",
    "pd-osc",
    "ntpdate",
+   "samba",
+   "python-txosc",
    ]
 
   # Define packages to remove.

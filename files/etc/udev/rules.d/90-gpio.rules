@@ -1,0 +1,5 @@
+# Fix permissions for /sys/class/gpio/export and /sys/class/gpio/unexport
+
+SUBSYSTEM=="gpio", ACTION=="add", PROGRAM="/bin/sh -c 'chown root:ugpio /sys/class/gpio/*export'" 
+SUBSYSTEM=="gpio", ACTION=="add", PROGRAM="/bin/sh -c 'chmod g+w /sys/class/gpio/*export'"
+

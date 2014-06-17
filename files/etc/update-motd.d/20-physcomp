@@ -1,0 +1,5 @@
+#!/bin/sh
+#    10-physcomp - print the localized system identification
+
+printf "\nWelcome to the Carnegie Mellon University Physical Computing Udoo system.\n"
+

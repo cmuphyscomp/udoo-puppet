@@ -37,7 +37,7 @@ if __name__ == "__main__":
         assert_root()
         if args.verbose: print "Updating configuration files from github."
         os.system('cd /etc/puppet/modules/cmuphyscomp; git pull')
-        os.system("""puppet apply -e 'include cmuphyscomp::scripts'""")
+        os.system("""puppet apply -e 'include cmuphyscomp::scripts\ninclude cmuphyscomp::misc'""")
 
     if args.all or args.packages:
         assert_root()
