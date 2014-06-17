@@ -40,12 +40,15 @@ class cmuphyscomp::misc {
     source => "puppet:///modules/cmuphyscomp/etc/minicom/minirc.dfl",
   }
 
-  file { "/etc/udev/rules.d/90-gpio.rules":
-    ensure => present,
-    mode   => 0644,
-    owner  => 'root',
-    group  => 'root',
-    source => "puppet:///modules/cmuphyscomp/etc/udev/rules.d/90-gpio.rules",
-  }
+  # The following was an attempt to fix permissions on /sys/class/gpio/export and /sys/class/gpio/unexport, but
+  # I believe it is slowing down boot too much, probably from the rules triggering redundantly.
+
+  # file { "/etc/udev/rules.d/90-gpio.rules":
+  #   ensure => present,
+  #   mode   => 0644,
+  #   owner  => 'root',
+  #   group  => 'root',
+  #   source => "puppet:///modules/cmuphyscomp/etc/udev/rules.d/90-gpio.rules",
+  # }
 
 }
