@@ -13,40 +13,49 @@ def assert_root():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Update a Udoo Linux installation for Physical Computing.')
-    parser.add_argument('--verbose',  action='store_true', help='Generate extra status output while running.')
+    parser.add_argument('--quiet',    action='store_true', help='Suppress status output while running.')
 
     parser.add_argument('--network',  action='store_true', help='Update network configuration.')
     parser.add_argument('--github',   action='store_true', help='Update config scripts from github.')
     parser.add_argument('--packages', action='store_true', help='Update system Debian packages.')
     parser.add_argument('--user',     action='store_true', help='Update user account files.')
+    parser.add_argument('--course',   action='store_true', help='Update course files for Physical Computing.')
 
-    parser.add_argument('--all',      action='store_true', help='Enable all update phases.')
+    parser.add_argument('--all',      action='store_true', help='Enable all update phases (default).')
 
     args = parser.parse_args()
+    verbose = not args.quiet
 
-    if args.github is False and args.packages is False and args.network is False and args.user is False and args.all is False:
-        if args.verbose: print "No options specified, defaulting to full update."
+    # check for the case where no specific flags where enabled, and choose a default
+    opts = vars(args)
+    requested = { k : opts[k] for k in opts if k != 'quiet' and opts[k] != False }
+    if len(requested) == 0:
+        if verbose: print "No update options specified, defaulting to full update."
         args.all = True
 
     if args.all or args.network:
         assert_root()
-        if args.verbose: print "Updating network configuration."
+        if verbose: print "Updating network configuration."
         os.system("""puppet apply -e 'include cmuphyscomp::network'""")
 
     if args.all or args.github:
         assert_root()
-        if args.verbose: print "Updating configuration files from github."
+        if verbose: print "Updating configuration files from github."
         os.system('cd /etc/puppet/modules/cmuphyscomp; git pull')
         os.system("""puppet apply -e 'include cmuphyscomp::scripts\ninclude cmuphyscomp::misc'""")
 
     if args.all or args.packages:
         assert_root()
-        if args.verbose: print "Updating Debian packages."
+        if verbose: print "Updating Debian packages."
         os.system("""apt-get update""")
         os.system("""puppet apply -e 'include cmuphyscomp::packages'""")
 
     if args.all or args.user:
         assert_root()
-        if args.verbose: print "Updating user account."
+        if verbose: print "Updating user account."
         os.system("""puppet apply -e 'include cmuphyscomp::user\ninclude cmuphyscomp::ssh'""")
 
+    if args.all or args.course:
+        assert_root()
+        if verbose: print "Updating course files for Physical Computing."
+        os.system('cd /opt/cmuphyscomp/course-demos; git pull')

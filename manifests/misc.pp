@@ -40,6 +40,30 @@ class cmuphyscomp::misc {
     source => "puppet:///modules/cmuphyscomp/etc/minicom/minirc.dfl",
   }
 
+  # global folder to hold locally installed Pure Data patches and externals
+  file { "/usr/local/lib/pd-externals":
+    ensure => 'directory',
+    mode   => 0755,
+    owner  => root,
+    group  => root,
+  }
+
+  # global folder to hold course package materials in one place
+  file { "/opt/cmuphyscomp":
+    ensure => 'directory',
+    mode   => 0755,
+    owner  => root,
+    group  => root,
+  }
+
+  # locally compiled Pure Data library, kept in the course package
+  file { "/usr/local/lib/pd-externals/mrpeach":
+    ensure => 'link',
+    target => '/opt/cmuphyscomp/lib/pd-externals/mrpeach/',
+    owner  => root,
+    group  => root,
+  }
+
   # The following was an attempt to fix permissions on /sys/class/gpio/export and /sys/class/gpio/unexport, but
   # I believe it is slowing down boot too much, probably from the rules triggering redundantly.
 

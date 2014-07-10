@@ -9,6 +9,7 @@ class cmuphyscomp::packages {
    "make",
    "git",
    "git-gui",
+   "subversion",
    "screen",
    "xrdp",
    "minicom",
@@ -24,6 +25,9 @@ class cmuphyscomp::packages {
    "ntpdate",
    "samba",
    "python-txosc",
+   "python-liblo",
+   "liblo-dev",
+   "pyliblo-utils"
    ]
 
   # Define packages to remove.
